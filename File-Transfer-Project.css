@@ -440,8 +440,3 @@ background-color: rgba(155, 152, 152, 0.996);
 }
 
 
-#error-message, #error-message1 {
-    color: red;
-    margin-top: 1px;
-    font-size: 0.9rem;
-}

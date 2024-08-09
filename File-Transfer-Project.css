@@ -19,9 +19,9 @@ margin-left: 1%;
 }
 .share-parent{
     display: flex;
-   
+    background-color: #0e0ae2;
     font-size: 1.2rem;
-    background-color:#130fe5 ;
+   
     padding-top: 10px;
     position: fixed;
     width: 98.5%;
@@ -103,6 +103,7 @@ margin-left: 1%;
     position: absolute;
     left: 25%;
     top: 15%;
+   
 }
 .text1{
     color: white;
@@ -272,4 +273,175 @@ gap: 20px;
     color: white;
     font-size: 1rem;
     
+}
+
+.alert4{
+   position: absolute;
+   left: 70%;
+   bottom: 2%;
+}
+.alert3{
+margin-left: 2%;
+}
+.alert3:hover{
+    text-decoration: line-through;
+}
+.alert2{
+  font-weight: bold;
+  margin-left: 2%;
+  
+}
+.alert5{
+    position: absolute;
+    top: 49%;
+    left: 13%;
+}
+
+.alert-head{
+background-color: white;
+height: 200px;
+width: 350px;
+border-radius: 5px;
+border: 1px solid white;
+position: absolute;
+left: 65%;
+top: 25%;
+display: none;
+
+
+}
+.alert-box{
+    height: 55px;
+    width: 55px;
+    background-color: #0e0ae2;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 3rem;
+    text-align: center;
+}
+.alert-main{
+    border: 2px dashed rgb(200, 197, 197);
+    margin-top: 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+   
+}
+.more{
+    position: absolute;
+    top: 0%;
+    left: 30%;
+  
+}
+.alert1{
+    cursor: pointer;
+}
+
+
+.box-head{
+    height: 480px;
+    width: 500px;
+    background-color: white;
+    position: absolute;
+    left: 25%;
+    top: 18%;
+    display: none;
+    border-radius: 10px;
+
+}
+.box-main{
+    display: grid;
+grid-template-columns: repeat(1, 1fr);
+gap: 10px;
+width: 78%;
+margin-left: 5%;
+margin-top: 2%;
+
+
+}
+.box-text1{
+    padding: 15px;
+    border-radius: 15px;
+    border: 3px solid rgb(169, 166, 166);
+
+}
+.box-btn1{
+padding-left: 60px;
+padding-right: 60px;
+padding-top: 25px;
+padding-bottom: 25px;
+border: 1px solid white;
+border-radius: 10px;
+font-weight: bold;
+font-size: 1.3rem;
+margin-top: 4%;
+margin-left: 4%;
+background-color: white;
+}
+.box-btn2{
+padding-left: 60px;
+padding-right: 60px;
+padding-top: 25px;
+padding-bottom: 25px;
+border: 1px solid white;
+border-radius: 10px;
+font-weight: bold;
+font-size: 1.3rem;
+margin-top: 4%;
+margin-left: -5%;
+background-color: rgba(155, 152, 152, 0.996);
+}
+.box-label1{
+    background-color: white;
+    height: 15px;
+    width: 25%;
+    position: absolute;
+    top: 20%;
+    left: 7%
+}
+.box-label2{
+    background-color: white;
+    height: 15px;
+    width: 25%;
+    position: absolute;
+    top: 33%;
+    left: 7%
+}
+.box-text2{
+    padding: 15px;
+    border-radius: 15px;
+    border: 3px solid blue   ;
+    background-color: blue;
+    color: white;
+    font-size: 1.3rem;
+}
+
+
+.box-head1{
+    height: 480px;
+    width: 500px;
+    background-color: white;
+    position: absolute;
+    left: 25%;
+    top: 18%;
+    display: none;
+    border-radius: 10px;
+
+}
+.box-label3{
+    background-color: white;
+    height: 15px;
+    width: 28%;
+    position: absolute;
+    top: 20%;
+    left: 7%
+}
+
+
+#error-message, #error-message1 {
+    color: red;
+    margin-top: 1px;
+    font-size: 0.9rem;
 }

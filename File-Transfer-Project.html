@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Send Large Files</title>
     <link rel="stylesheet" href="File-Transfer-Project.css">
 </head>
 
@@ -24,6 +24,9 @@
             <button class="btn1">Register </button>
             <button class="btn2">Sign in</button>
         </div>
+
+
+
         <div class="share-drop-main">
             <select class="share-drop-head">
                 <option class="share-drop">Help Center</option>
@@ -34,12 +37,91 @@
         <div class="main">
             <h3 class="text1">Transfer and have your files travel for free</h3>
             <p class="text2">TransferNow is a simple and free way to safely share your data</p>
-
         </div>
+
+
+
+
         <div class="share-file"></div>
             <a class="start" onclick="document.getElementById('fileInput').click()">Start</a>
+            <input type="file" id="fileInput" multiple>
 
-            <input type="file" id="fileInput">
+
+<div id="box" class="alert-head">
+            <div class="alert-main">
+                <div class="alert-box">+</div>
+                <div class="more">
+                <h4 >Add More Files</h4>
+                <a class="alert1" onclick="document.getElementById('fileInput').click()">or Select a folder</b></a>
+            <input type="file" id="fileInput" multiple>
+        </div>
+            </div>
+            <div class="alert-main1">
+                <p class="alert2" id="fileCount"></p>
+                <p class="alert5" id="filetotal"></p>
+                
+                <hr>
+                <p class="alert3" id="filePath"></p>
+                <p class="alert4" id="fileSize"></p>
+                
+            
+            </div>
+          
+        </div>
+
+
+         <script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+    const files = event.target.files;
+    const fileCount = files.length;
+
+    if (fileCount > 0) {
+       
+        document.getElementById('fileCount').textContent = ` ${fileCount}file`;
+
+      
+        let fileNames = '';
+        let fileSizes = '';
+        let totalSize = 0;  
+
+        for (let i = 0; i < fileCount; i++) {
+            fileNames += ` ${files[i].name}\n`;
+            const fileSizeInKB = (files[i].size / 1024).toFixed(2);
+            fileSizes += ` ${fileSizeInKB} KB\n`;
+            totalSize += parseFloat(fileSizeInKB);
+        }
+
+        document.getElementById('filePath').textContent = fileNames.trim();
+        document.getElementById('fileSize').textContent = fileSizes.trim();
+        document.getElementById('filetotal').textContent = `(${totalSize.toFixed(2)} KB)`; 
+
+        const openbox = document.getElementById('box');
+        openbox.style.display = 'block'; 
+
+        const openbox1 = document.getElementById('important');
+        openbox1.style.display = 'block'; 
+        const elementsToRemove = [
+            '.share-file', '.start', '.pop-head', '.spelling-head', 
+            '.upload-link', '.spelling', '.spelling1', '.text1', 
+            '.text2', '.share-btn-main', '.send-btn', '.receive-btn'
+        ];
+
+        elementsToRemove.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                element.remove();
+            }
+        });
+    }
+});
+
+</script>
+
+
+
+
+
+
 
             <div class="pop-head">
                 <div class="spelling-head">
@@ -60,6 +142,27 @@
             <button class="receive-btn">Receive</button>
         </div>
      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
     <div class="share-heading">
         <h1>How to send and share large files with TransferNow?</h1>
@@ -99,5 +202,85 @@
     <button class="btn4">Compare our offers</button>
    </div>
 
+
+
+
+
+
+
+
+
+
+   <div class="box-head" id="important">
+    <div class="box-btn-head">
+        <button class="box-btn1">Send files</button>
+        <button class="box-btn2"id="create">Create a link</button>
+    </div>
+    <script>
+
+document.getElementById('create').addEventListener('click', function() {
+    // Remove the 'hidden' div with the class 'main'
+    const content = document.getElementById('important');
+    content.style.display = 'none';
+
+    const josephDiv = document.getElementById('important1');
+    josephDiv.style.display = 'block'; // Make the Joseph div visible
+});
+    </script>
+    <div class="box-main">
+    <label class="box-label1">Your email address</label>
+    <input class="box-text1" type="text" placeholder="Your email address"/>
+    <label class="box-label2">Your email address</label>
+    <input class="box-text1" type="text"placeholder="Sender Name"/>
+    <input class="box-text1" type="text" placeholder="Recipient(s) email"/>
+    <input class="box-text1" type="text"placeholder="Subject (optional)"/>
+    <input class="box-text1" type="text"placeholder="Your message (optional)"/>
+    <button class="box-text2">Transfer</button>
+
+</div>
+</div>
+
+
+
+
+
+
+<div class="box-head1"id="important1">
+    <div class="box-btn-head">
+        <button class="box-btn1" id="send1">Send files</button>
+        <button class="box-btn2">Create a link</button>
+    </div>
+
+<script>
+    document.getElementById('send1').addEventListener('click', function() {
+        // Remove the 'hidden' div with the class 'main'
+        const content = document.getElementById('important1');
+        content.style.display = 'none';
+
+        const josephDiv1 = document.getElementById('important');
+    josephDiv1.style.display = 'block'; // Make the Joseph div visible
+    });
+</script>
+    <div class="box-main">
+    <label class="box-label3">Your email address</label>
+    <input class="box-text1" type="text" placeholder="Your email address"/>
+    
+    <input class="box-text1" type="text"placeholder="Subject (optional)"/>
+    <input class="box-text1" type="text"placeholder="Custom Link (optional)"/>
+    <button class="box-text2">Get a Link</button>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
 </body>
 </html>
+
+

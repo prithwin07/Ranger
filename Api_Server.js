@@ -2,10 +2,11 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const path = require('path');
-const app = express();
-const cors = require('cors');
-app.use(cors());
 
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -18,21 +19,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'infotech6369@gmail.com',
-    pass: 'pfuaytvmyoxqpjak' 
+    user: "infotech6369@gmail.com",
+    pass: 'pfuaytvmyoxqpjak'
   }
 });
 
 app.post('/send-email', upload.single('file'), (req, res) => {
   const email = req.body.email;
+  const password=req.body.passowrd;
   const file = req.file;
 
   const mailOptions = {
-    from: 'infotech6369@gmail.com',
+    from: password,
     to: email,
     subject: 'File Upload',
     text: 'You have successfully uploaded a file!',
@@ -47,13 +48,15 @@ app.post('/send-email', upload.single('file'), (req, res) => {
     if (error) {
       return res.status(500).send(error.toString());
     }
-    setTimeout(() => {
-      
-  }, 8000); 
-
+    setTimeout(() => {}, 8000);
   });
 });
 
-app.listen(3000, () => {
+app.listen(3000, async () => {
   console.log('Server is running on port 3000');
+
+  
+  const open = await import('open');
+
+  open.default('D:/Html11/File-Transfer-Project.html');
 });

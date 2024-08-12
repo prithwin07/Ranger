@@ -44,7 +44,7 @@
 
         <div class="share-file"></div>
             <a class="start" onclick="document.getElementById('fileInput').click()">Start</a>
-            <input type="file" id="fileInput" multiple>
+            <input type="file" id="fileInput" multiple   accept="image/*" >
 
 
 <div id="box" class="alert-head">
@@ -58,13 +58,14 @@
             </div>
             <div class="alert-main1">
                 <p class="alert2" id="fileCount"></p>
+                
                 <p class="alert5" id="filetotal"></p>
                 
                 <hr>
                 <p class="alert3" id="filePath"></p>
                 <p class="alert4" id="fileSize"></p>
                 
-            
+                
             </div>
           
         </div>
@@ -205,23 +206,163 @@ document.getElementById('create').addEventListener('click', function() {
     
     const content = document.getElementById('important');
     content.style.display = 'none';
+    const content5 = document.getElementById('important10');
+    content5.style.display = 'none';
 
     const josephDiv = document.getElementById('important1');
     josephDiv.style.display = 'block';
+
 });
     </script>
     <div class="box-main">
+        <form id="myForm">
     <label class="box-label1">Your email address</label>
-    <input class="box-text1" type="text" placeholder="Your email address"/>
-    <label class="box-label2">Your email address</label>
+    <input class="box-text1" id="email" type="text" placeholder="Your email address"/>
+    <div id="email-error" class="error"></div>
+    
     <input class="box-text1" type="text"placeholder="Sender Name"/>
-    <input class="box-text1" type="text" placeholder="Recipient(s) email"/>
+    <input class="box-text1" type="text"id="password" placeholder="Recipient(s) email"/>
+    <div id="password-error" class="error"></div>
     <input class="box-text1" type="text"placeholder="Subject (optional)"/>
     <input class="box-text1" type="text"placeholder="Your message (optional)"/>
-    <button class="box-text2">Transfer</button>
+    <button class="box-text2"  type="submit" id="saveButton">Transfer</button>
+</form>
+</div>
+</div>      
 
-</div>
-</div>
+<script >
+
+    document.getElementById('saveButton').addEventListener('click', handleSaveClick);
+    document.getElementById('fileInput').addEventListener('change', handleFileChange);
+    
+    function handleFileChange(e) {
+      const selectedFile = e.target.files[0];
+      
+      if (selectedFile) {
+   
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+          document.getElementById('imagePreview').src = fileReader.result;
+          document.getElementById('previewContainer').style.display = 'block';
+          document.getElementById('emailPreview').innerText = `Email: ${document.getElementById('email').value}`;
+          document.getElementById('fileNamePreview').innerText = `File Name: ${selectedFile.name}`;
+        };
+        fileReader.readAsDataURL(selectedFile);
+      }
+    }
+    
+    function handleSaveClick() {
+      const email = document.getElementById('email').value;
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+    
+      if (email && file) {
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('file', file);
+    
+   
+        fetch('http://localhost:3000/send-email', {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert('Email sent successfully!');
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('There was an error sending the email!', error);
+        });
+      } else {
+        alert('Please enter an email and select a file.');
+      }
+    }
+    
+    
+    
+    
+      </script>
+
+
+
+<script>
+    
+
+    
+    const form = document.getElementById('myForm');
+const email = document.getElementById('email');
+const emailError = document.getElementById('email-error');
+const password = document.getElementById('password');
+const passwordError = document.getElementById('password-error');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const emailValue = email.value.trim();
+    const passwordValue = password.value.trim();
+
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    if (emailValue === '' && passwordValue === '') {
+        emailError.textContent = 'Please fill in the email field!';
+        passwordError.textContent = 'Please fill in the password field!';
+    } else if (emailValue !== '' && passwordValue === '') {
+        passwordError.textContent = 'Please fill in the password field!';
+    } else if (emailValue === '' && passwordValue !== '') {
+        emailError.textContent = 'Please fill in the email field!';
+    } else {
+        
+        document.querySelector('.box-head').style.display = 'none';
+        document.querySelector('.alert-head').style.display = 'none';
+
+     
+        const josephDiv2 = document.getElementById('important3');
+        josephDiv2.style.display = 'block';
+
+        startProgress();
+    }
+});
+
+email.addEventListener('input', () => {
+    emailError.textContent = '';
+});
+
+password.addEventListener('input', () => {
+    passwordError.textContent = '';
+});
+
+function startProgress() {
+    let progressCircle = document.querySelector('.progress');
+    let progressCount = document.getElementById('progress-count');
+    let progressHead = document.querySelector('.progress-head');
+    
+    let jos5 = document.querySelector('.jos5');
+    let radius = progressCircle.r.baseVal.value;
+    let circumference = 2 * Math.PI * radius;
+    let offset = circumference;
+    let progress = 0;
+
+    let interval = setInterval(function() {
+        if (progress >= 100) {
+            clearInterval(interval);
+            progressHead.classList.add('hidden'); 
+            jos5.style.display = 'block'; 
+            
+            const content5 = document.getElementById('important3');
+            content5.style.display = 'none';
+            startCountdown();
+        
+        } else {
+            progress++;
+            offset = circumference - (progress / 100) * circumference;
+            progressCircle.style.strokeDashoffset = offset;
+            progressCount.innerHTML = `${progress}%`;
+        }
+    }, 50); 
+}
+
+</script>
 
 
 
@@ -257,6 +398,324 @@ document.getElementById('create').addEventListener('click', function() {
 
 
 
+
+
+
+
+
+
+
+
+
+<div class="progress-head"id="important3">
+    <div class="progress-circle">
+        <svg width="150" height="150">
+            <circle class="background" cx="75" cy="75" r="70"></circle>
+            <circle class="progress" cx="75" cy="75" r="70"></circle>
+        </svg>
+        <div class="progress-count" id="progress-count">0%</div>
+    </div>
+    <div class="transfer-head">
+        <h1 class="transfer">Transfer Validation</h1>
+        <p id="fileCount1"></p>
+   
+    <p id="filetotal1"></p> 
+        <p>--KB/Second(s)</p>
+        <p>--remaining</p>
+    </div>
+    <div class="cancel-btn-head">
+        <button class="cancel-btn">Cancel</button>
+    </div>
+</div>
+
+
+<script>
+   document.getElementById('fileInput').addEventListener('change', function(event) {
+    const files1 = event.target.files;
+    const fileCount1 = files1.length;
+
+    if (fileCount1 > 0) {
+        document.getElementById('fileCount1').textContent = `Sending ${fileCount1} file${fileCount1 > 1 ? 's' : ''}`;
+        
+        let fileDetails1 = '';
+        let totalSize1 = 0; 
+
+        for (let i = 0; i < fileCount1; i++) {
+            const fileSizeInBytes = files1[i].size;
+            const fileSizeInKB = (fileSizeInBytes / 1024).toFixed(2);
+            totalSize1 += fileSizeInBytes;
+            fileDetails1 += `File: ${files1[i].name} - ${fileSizeInKB} KB (${fileSizeInBytes} bytes)\n`;
+        }
+
+      
+
+        const totalSizeInKB = (totalSize1 / 1024).toFixed(2);
+        document.getElementById('filetotal1').textContent = `Total: ${totalSizeInKB} KB `;
+    }
+});
+
+    </script>
+    
+
+
+<div class="jos5" id="security-important">
+    <div class="security-head">
+        <div class="progress-container">
+          
+            <div class="progress-bar"></div>
+            <div class="progress-bar1"></div>
+            <div class="progress-bar2"></div>
+    
+            
+        </div>
+        <h1  class="security">Security analysis in progress</h1>
+        <button id="waitButton" class="wait1">Click to finalize or wait</button>
+    </div>
+</div>
+
+
+<div class="link" id="link-important">
+    <div class="security-head1" id="security-important">
+        <div class="progress-container1">
+            <div class="progress-bar111"></div>
+            <div class="progress-bar11"></div>
+            <div class="progress-bar12">
+                <img class="tick" src="images/tick.png"/>
+            </div>
+        </div>
+        <h1 class="security1">Security analysis  Completed!</h1>
+        <button id="waitButton1" class="wait">Click to finalize or wait</button>
+    </div>
+</div>
+
+
+<script>
+  
+    function startCountdown() {
+        let timeLeft = 5;
+        const button = document.getElementById('waitButton');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            button.textContent = `Click to finalize or wait ${timeLeft} seconds`;
+            
+            if (timeLeft < 0) {
+                clearInterval(countdown);
+                button.textContent = "Time's up! Click to finalize";
+                startCountdown1()
+          
+                const secure = document.getElementById('security-important');
+                secure.style.display = 'none';
+
+            
+                const Div1 = document.getElementById('link-important');
+                Div1.style.display = 'block';
+            }
+        }, 1000);
+    }
+
+</script>
+
+
+
+
+
+
+
+<script>
+ 
+    function startCountdown1() {
+        let timeLeft = 5;
+        const button = document.getElementById('waitButton1');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            button.textContent = `Click to finalize or wait ${timeLeft} seconds`;
+            
+            if (timeLeft < 0) {
+                clearInterval(countdown);
+                button.textContent = "Time's up! Click to finalize";
+
+          
+                const secure = document.getElementById('link-important');
+                secure.style.display = 'none';
+
+                const Div1 = document.getElementById('search');
+                Div1.style.display = 'block';
+            }
+        }, 1000);
+    }
+
+</script>
+      
+
+
+
+
+
+
+<div class="imma"id="search">
+    <div class="link-head">
+        <div class="link-main">
+<h1>Your transfer is send!</h1>
+<p class="para">The download email has been sent to your recipients. Your transfer will be available for 7 days.</p>
+<input class="link-text" type=""value="jj"Readonly/>
+<div class="link-btn-head">
+    <button class="link-btn"><img class="copy" src="images/copy.png"/></button>
+    <button class="link-btn1"><img class="download" src="images/download.png"/></button>
+</div>
+<div class="link-btn-head1">
+    <button class="link-btn2">View my Transfer</button>
+    <button class="link-btn3">Create a New Transfer</button>
+</div>
+    </div>
+    <div class="link-circle">
+        <img class="duke" src="images/duke.jfif"/>
+    </div>
+</div>
+
+</div>
+
+
+<script>
+  
+    const linkText = "D:\\Html11\\path.html";
+    document.querySelector('.link-text').value = linkText;
+
+    document.querySelector('.link-btn').addEventListener('click', () => {
+            const input = document.querySelector('.link-text');
+            input.select(); 
+            document.execCommand('copy'); 
+           
+        });
+
+</script>
+
+
+
+
+
+
+
+
+
+<div id="path" class="path-main">
+
+    <div class="path-main1">
+
+        <h1 class="file">File is ready!</h1>
+
+
+<div class="path-merge">
+        <p class="path1" id="fileCount5"></p>
+        <p class="path2" id="filetotal5"></p>
+        <p id="date-time" class="time"></p>
+     </div>
+
+
+        <div class="path-merge1">
+        <p class="path3" id="filePath5"></p>
+        <p class="path4" id="fileSize5"></p>
+    </div>
+<button class="down">Download file</button>
+        
+    </div>
+  
+</div>
+
+
+
+
+<script>
+    document.querySelector('.down').addEventListener('click', function() {
+        const fileInput = document.getElementById('fileInput');
+        const files = fileInput.files;
+
+        if (files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const url = URL.createObjectURL(file);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name;
+                document.body.appendChild(a);
+                a.click();
+                URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            }
+        } else {
+            alert('No files selected');
+        }
+    });
+</script>
+
+
+
+
+
+
+
+<script>
+    function formatTime(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    return `${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
+function updateDateTime() {
+    const now = new Date();
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    const formattedDate = now.toLocaleDateString('en-US', options);
+    const formattedTime = formatTime(now);
+
+    document.getElementById('date-time').textContent = `Expires on ${formattedDate}, ${formattedTime}`;
+}
+
+setInterval(updateDateTime, 1000); 
+
+</script>
+
+
+
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const files5 = event.target.files;
+        const fileCount5 = files5.length;
+
+        if (fileCount5 > 0) {
+            document.getElementById('fileCount5').textContent = ` ${fileCount5} file`;
+
+            let fileNames5 = '';
+            let fileSizes5 = '';
+            let totalSize5 = 0;  
+
+            
+            Array.from(files5).map((file) => {
+                fileNames5 += `${file.name}\n`;
+                const fileSizeInKB5 = (file.size / 1024).toFixed(2);
+                fileSizes5 += `${fileSizeInKB5} KB\n`;
+                totalSize5 += parseFloat(fileSizeInKB5);
+            });
+
+            document.getElementById('filePath5').textContent = fileNames5.trim();
+            document.getElementById('fileSize5').textContent = fileSizes5.trim();
+            document.getElementById('filetotal5').textContent = `(${totalSize5.toFixed(2)} KB)`; 
+
+            document.querySelector('.link-btn1').addEventListener('click', function() {
+                const secure5 = document.getElementById('search');
+                secure5.style.display = 'none';
+                document.getElementById('path').style.display = 'block';
+            });
+        }
+    });
+</script>
 
 
 
